@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Iniciar sesión</div>
+                <div class="panel-body">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.message }}</div>
+                    {% endif %}
+                    <form action="{{ path('usuario_entrar') }}" method="post" class="form" role="form">
+                        <div class="form-group">
+                            <label for="usuario"><i class="fa fa-user"></i> Nombre de usuario</label>
+                            <input type="text" id="usuario" name="_username" required="" class="form-control" tabindex="1"
+                                   autocorrect="off" autocapitalize="none" {% if not ultimo_usuario %}autofocus="" {% endif %}value="{{ ultimo_usuario }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><i class="fa fa-key"></i> Contraseña</label>
+                            <input type="password" id="password" name="_password" required="" class="form-control" tabindex="2"
+                                   {% if ultimo_usuario %}autofocus="" {% endif %}>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="enviar" class="btn btn-info btn-block" tabindex="3">Entrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

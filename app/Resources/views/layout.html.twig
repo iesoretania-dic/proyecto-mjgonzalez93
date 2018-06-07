@@ -21,9 +21,9 @@
                     <ul class="nav navbar-nav navbar-right">
                         {% if app.user %}
                             <li><a href="#"><i class="fa fa-user"></i> Mi perfil</a></li>
-                            <li><a href="#"><i class="fa fa-sign-out"></i> - Salir</a></li>
+                            <li><a href="{{ path('usuario_salir') }}"><i class="fa fa-sign-out"></i> - Salir</a></li>
                         {% else %}
-                            <li><a href="#"><i class="fa fa-sign-in"></i> Entrar</a></li>
+                            <li><a href="{{ path('usuario_entrar') }}"><i class="fa fa-sign-in"></i> Entrar</a></li>
                         {% endif %}
                     </ul>
                 </div><!--/.nav-collapse -->
