@@ -10,10 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class UsuarioController extends Controller
+class AlumnoController extends Controller
 {
     /**
-     * @Route("/subida_usuario", name="subida usuario")
+     * @Route("/subida_alumno", name="subida alumno")
      */
     public function subirArchivoAction(Request $request) {
 
@@ -24,17 +24,17 @@ class UsuarioController extends Controller
                 $ruta = substr($ruta, 0, -4);
                 $destino = $ruta . $carpeta;
                 move_uploaded_file($_FILES['archivo']['tmp_name'], $destino . $_FILES['archivo']['name']);
-                return $this->redirectToRoute('lectura usuario', ['archivo' => $_FILES['archivo']['name']]);
+                return $this->redirectToRoute('lectura alumno', ['archivo' => $_FILES['archivo']['name']]);
             }catch (\Exception $e){
                 $this->addFlash('error', 'No se ha podido subir el archivo');
-                return $this->redirectToRoute('subida archivo');
+                return $this->redirectToRoute('subida alumno');
             }
         }
-        return $this->render('usuarios/formulario.html.twig');
+        return $this->render('alumnos/formulario.html.twig');
     }
 
     /**
-     * @Route("/lectura_usuario/{archivo}", name="lectura usuario")
+     * @Route("/lectura_alumno/{archivo}", name="lectura alumno")
      */
 
     public function lecturaArchivoAction(Request $request, $archivo) {
@@ -42,7 +42,6 @@ class UsuarioController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         try {
-
 
             $conexion = mysqli_connect('localhost', 'root', 'oretania', 'atica_fct');
             if (!$conexion) {
@@ -66,7 +65,7 @@ class UsuarioController extends Controller
             $csv = Reader::createFromPath($destino . $archivo)
                 ->setHeaderOffset(0);
 
-            $usuarios = $this->getDoctrine()->getRepository('AppBundle:User')->listadoUsuarios();
+            $usuarios = $this->getDoctrine()->getRepository('AppBundle:User')->listadoDNIAlumnos();
 
             foreach ($csv as $dato) {
                 $repetido = false;
@@ -110,6 +109,19 @@ class UsuarioController extends Controller
             $this->addFlash('error', 'No se han podido guardar los cambios ' .$e);
             return $this->redirectToRoute('inicio');
         }
+    }
+
+    /**
+     * @Route("/alumnos", name="listado_alumnos")
+     */
+    public function listadoAlumnosAction()
+    {
+
+        $alumnos = $this->getDoctrine()->getRepository('AppBundle:User')->listadoAlumnos();
+
+        return $this->render('alumnos/listado.html.twig', [
+            'alumnos' => $alumnos
+        ]);
     }
 
 }

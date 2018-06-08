@@ -1,0 +1,39 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Listado alumnos{% endblock %}
+{% block content %}
+    {% if alumnos %}
+        <h1>Listado de alumnos</h1>
+        <table class="table table-responsive table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="col-sm-2">Apellidos, Nombre</th>
+                <th class="col-sm-1">DNI</th>
+                <th class="col-sm-1">Curso</th>
+                <th class="col-sm-1">Ciudad</th>
+                <th class="col-sm-1">Provincia</th>
+                <th class="col-sm-3">Direccion</th>
+                <th class="col-sm-1">Email</th>
+                <th class="col-sm-1">Accion</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for alumno in alumnos %}
+                <tr>
+                    <td>{{ alumno.firstName }}, {{ alumno.lastName }}</td>
+                    <td>{{ alumno.loginUsername }}</td>
+                    <td>{{ alumno.studentGroup }}</td>
+                    <td>{{ alumno.city }}</td>
+                    <td>{{ alumno.province }}</td>
+                    <td>{{ alumno.address }}</td>
+                    <td>{{ alumno.email }}</td>
+                    <td><a href="#" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
+                    <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a></td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay vehiculos en esa categoria</h2>
+    {% endif %}
+{% endblock %}

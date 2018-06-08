@@ -8,10 +8,19 @@ use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
-    public function listadoUsuarios()
+    public function listadoDNIAlumnos()
     {
         return $this->getEntityManager()
             ->createQuery('SELECT u.loginUsername AS dni FROM AppBundle:User u WHERE u.studentGroup != false  ')
+            ->getResult();
+    }
+
+    public function listadoAlumnos()
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.studentGroup != :usuario')
+            ->setParameter('usuario', false)
+            ->getQuery()
             ->getResult();
     }
 
