@@ -17,6 +17,7 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li{% if ruta == 'inicio' %} class="active"{% endif %}><a href="{{ path('inicio') }}"><i class="fa fa-home"></i> Inicio</a></li>
+                        <li{% if ruta == 'subida usuario' %} class="active"{% endif %}><a href="{{ path('subida usuario') }}"><i class="fa fa-user"></i> Añadir usuarios</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if app.user %}
@@ -31,6 +32,16 @@
         </nav>
     {% endblock %}
     <div class="container">
+        {% for mensaje in app.flashes('exito') %}
+            <div class="alert alert-success">
+                {{ mensaje }}
+            </div>
+        {% endfor %}
+        {% for mensaje in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ mensaje }}
+            </div>
+        {% endfor %}
         {% block content %}{% endblock %}
     </div>
 {% endblock %}
