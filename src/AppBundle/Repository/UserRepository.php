@@ -11,7 +11,7 @@ class UserRepository extends EntityRepository
     public function listadoDNIAlumnos()
     {
         return $this->getEntityManager()
-            ->createQuery('SELECT u.loginUsername AS dni FROM AppBundle:User u WHERE u.studentGroup != false  ')
+            ->createQuery('SELECT u.reference AS dni FROM AppBundle:User u WHERE u.studentGroup != false  ')
             ->getResult();
     }
 

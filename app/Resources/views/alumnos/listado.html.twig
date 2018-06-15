@@ -20,13 +20,13 @@
             {% for alumno in alumnos %}
                 <tr>
                     <td>{{ alumno.firstName }}, {{ alumno.lastName }}</td>
-                    <td>{{ alumno.loginUsername }}</td>
+                    <td>{{ alumno.reference }}</td>
                     <td>{{ alumno.studentGroup }}</td>
                     <td>{{ alumno.city }}</td>
                     <td>{{ alumno.province }}</td>
                     <td>{{ alumno.address }}</td>
                     <td>{{ alumno.email }}</td>
-                    <td><a href="#" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
+                    <td><a href="{{ path('edicion_alumnos', {'id': alumno.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
                     <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a></td>
 
                 </tr>
@@ -34,6 +34,6 @@
             </tbody>
         </table>
     {% else %}
-        <h2>No hay vehiculos en esa categoria</h2>
+        <h2>No hay alumnos que mostrar</h2>
     {% endif %}
 {% endblock %}

@@ -4,7 +4,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\AppBundle;
 use AppBundle\Entity\User;
+use AppBundle\Form\Type\UserType;
 use League\Csv\Reader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,9 +86,10 @@ class AlumnoController extends Controller
 
                     $user->setLoginUsername($dato['DNI/Pasaporte']);
                     $user->setPassword($this->get('security.password_encoder')->encodePassword($user, $contrasena));
+                    $user->setReference($dato['DNI/Pasaporte']);
                     $user->setFirstName('' . $dato['Primer apellido'] . ' ' . $dato['Segundo apellido']);
                     $user->setLastName($dato['Nombre']);
-                    //$user->setEmail($dato['Correo Electrónico']);
+                    $user->setEmail($dato['Correo Electrónico']);
                     $user->setGender('0');
                     $user->setGlobalAdministrator('0');
                     $user->setFinancialManager('0');
@@ -104,9 +107,9 @@ class AlumnoController extends Controller
                 }
             }
             $this->addFlash('exito', 'Solicitud realizada correctamente ');
-            return $this->redirectToRoute('inicio');
+            return $this->redirectToRoute('listado_alumnos');
         }catch (\Exception $e){
-            $this->addFlash('error', 'No se han podido guardar los cambios ' .$e);
+            $this->addFlash('error', 'No se han podido guardar los cambios ');
             return $this->redirectToRoute('inicio');
         }
     }
@@ -121,6 +124,41 @@ class AlumnoController extends Controller
 
         return $this->render('alumnos/listado.html.twig', [
             'alumnos' => $alumnos
+        ]);
+    }
+
+    /**
+     * @Route("/editar/alumno/{id}", name="edicion_alumnos")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function formularioAlumnosAction(Request $request, User $usuario = null){
+        $em = $this->getDoctrine()->getManager();
+        $nuevo = false;
+
+        if (null === $usuario) {
+            $usuario = new User();
+            $nuevo = true;
+            $em->persist($usuario);
+        }
+
+        $form = $this->createForm(UserType::class, $usuario,['nuevo' => $nuevo]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('exito', 'Cambios guardados correctamente ' );
+                return $this->redirectToRoute('listado_alumnos');
+            }
+            catch (\Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios ' );
+            }
+
+        }
+
+        return $this->render('alumnos/usuario.html.twig', [
+            'usuario' => $usuario,
+            'formulario' => $form->createView()
         ]);
     }
 
