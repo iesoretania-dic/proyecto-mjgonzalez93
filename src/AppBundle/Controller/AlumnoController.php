@@ -128,30 +128,46 @@ class AlumnoController extends Controller
     }
 
     /**
+     * @Route("/nuevo/alumno/", name="creacion_alumnos")
      * @Route("/editar/alumno/{id}", name="edicion_alumnos")
      * @IsGranted("ROLE_ADMIN")
      */
     public function formularioAlumnosAction(Request $request, User $usuario = null){
         $em = $this->getDoctrine()->getManager();
         $nuevo = false;
+        $modificar_perfil = true;
+        $alumno = true;
 
         if (null === $usuario) {
             $usuario = new User();
             $nuevo = true;
+            $modificar_perfil = false;
             $em->persist($usuario);
         }
 
-        $form = $this->createForm(UserType::class, $usuario,['nuevo' => $nuevo]);
+        $form = $this->createForm(UserType::class, $usuario,['alumno' => $alumno, 'modificar_perfil' => $modificar_perfil ,'nuevo' => $nuevo]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+
+                if($nuevo == true){
+                    $dni = $form->get('reference')->getData();
+                    $usuario->setLoginUsername($dni);
+                    $usuario->setGlobalAdministrator(false);
+                    $usuario->setAllowExternalLogin(false);
+                    $usuario->setFinancialManager(false);
+                    $usuario->setEnabled(false);
+                    $clave = $this->get('security.password_encoder')->encodePassword($usuario, $dni);
+                    $usuario->setPassword($clave);
+
+                }
                 $em->flush();
                 $this->addFlash('exito', 'Cambios guardados correctamente ' );
                 return $this->redirectToRoute('listado_alumnos');
             }
             catch (\Exception $e) {
-                $this->addFlash('error', 'No se han podido guardar los cambios ' );
+                $this->addFlash('error', 'No se han podido guardar los cambios ');
             }
 
         }

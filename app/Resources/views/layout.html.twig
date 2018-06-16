@@ -20,7 +20,8 @@
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Alumnos <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li{% if ruta == 'subida_alumno' %} class="active"{% endif %}><a href="{{ path('subida alumno') }}"><i class="fa fa-user"></i> Añadir alumnos</a></li>
+                                <li{% if ruta == 'creacion_alumnos' %} class="active"{% endif %}><a href="{{ path('creacion_alumnos') }}"><i class="fa fa-user"></i> Añadir alumnos</a></li>
+                                <li{% if ruta == 'subida_alumno' %} class="active"{% endif %}><a href="{{ path('subida alumno') }}"><i class="fa fa-file"></i> Añadir desde fichero</a></li>
                                 <li{% if ruta == 'listado_alumnos' %} class="active"{% endif %}><a href="{{ path('listado_alumnos') }}"><i class="fa fa-list"></i> Listado alumnos</a></li>
                             </ul>
                         </li>
