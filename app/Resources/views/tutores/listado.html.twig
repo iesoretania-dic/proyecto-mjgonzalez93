@@ -1,0 +1,44 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Listado tutores{% endblock %}
+{% block content %}
+    {% if tutores %}
+        <h1>Listado de tutores</h1>
+        <a href="{{ path('creacion_tutores') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir tutor</a>
+        <br/><br/>
+        <table class="table table-responsive table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="col-sm-2">Apellidos, Nombre</th>
+                <th class="col-sm-1">DNI</th>
+                <th class="col-sm-1">Ciudad</th>
+                <th class="col-sm-1">Provincia</th>
+                <th class="col-sm-1">CP</th>
+                <th class="col-sm-2">Direccion</th>
+                <th class="col-sm-1">Email</th>
+                <th class="col-sm-1">Accion</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tutor in tutores %}
+                <tr>
+                    <td>{{ tutor.firstName }}, {{ tutor.lastName }}</td>
+                    <td>{{ tutor.reference }}</td>
+                    <td>{{ tutor.city }}</td>
+                    <td>{{ tutor.province }}</td>
+                    <td>{{ tutor.zipCode }}</td>
+                    <td>{{ tutor.address }}</td>
+                    <td>{{ tutor.email }}</td>
+                    <td>
+                        <a href="{{ path('edicion_tutores', {'id': tutor.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
+                        <a href="{{ path('password_usuario', {'id': tutor.id}) }}" class="btn btn-xs btn-info " title="Modificar Pass"><i class="fa fa-key"></i></a>
+                        <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay tutores que mostrar</h2>
+    {% endif %}
+{% endblock %}

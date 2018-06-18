@@ -1,0 +1,22 @@
+{% extends 'layout.html.twig' %}
+{% set ruta = app.request.get('_route') %}
+{% block title %}
+    {% if ruta == 'creacion_tutores' %}
+        Nuevo tutor
+    {% elseif ruta == 'edicion_tutores' %}
+        Editar tutor
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(formulario) }}
+    {{ form_widget(formulario) }}
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Guardar cambios</button>
+            <a href="{{ path('listado_tutores') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Volver al listado de tutores</a>
+        </div>
+    </div>
+    {{ form_end(formulario) }}
+{% endblock %}
