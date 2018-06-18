@@ -3,7 +3,7 @@
 {% block content %}
     {% if alumnos %}
         <h1>Listado de alumnos</h1>
-        <a href="{{ path('creacion_alumnos') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir Usuario</a>
+        <a href="{{ path('creacion_alumnos') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir Alumno</a>
         <br/><br/>
         <table class="table table-responsive table-bordered table-striped table-hover">
             <thead>
@@ -13,8 +13,8 @@
                 <th class="col-sm-1">Curso</th>
                 <th class="col-sm-1">Ciudad</th>
                 <th class="col-sm-1">Provincia</th>
-                <th class="col-sm-1">Codigo Postal</th>
-                <th class="col-sm-3">Direccion</th>
+                <th class="col-sm-1">CP</th>
+                <th class="col-sm-2">Direccion</th>
                 <th class="col-sm-1">Email</th>
                 <th class="col-sm-1">Accion</th>
             </tr>
@@ -30,8 +30,11 @@
                     <td>{{ alumno.zipCode }}</td>
                     <td>{{ alumno.address }}</td>
                     <td>{{ alumno.email }}</td>
-                    <td><a href="{{ path('edicion_alumnos', {'id': alumno.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
-                    <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a></td>
+                    <td>
+                        <a href="{{ path('edicion_alumnos', {'id': alumno.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
+                        <a href="{{ path('password_usuario', {'id': alumno.id}) }}" class="btn btn-xs btn-info " title="Modificar Pass"><i class="fa fa-key"></i></a>
+                        <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
+                    </td>
 
                 </tr>
             {% endfor %}

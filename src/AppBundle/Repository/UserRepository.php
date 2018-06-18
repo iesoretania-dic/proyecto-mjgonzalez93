@@ -24,4 +24,13 @@ class UserRepository extends EntityRepository
             ->getResult();
     }
 
+    public function usuarioPassword($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
 }
