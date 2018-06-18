@@ -25,6 +25,14 @@
                                 <li{% if ruta == 'listado_alumnos' %} class="active"{% endif %}><a href="{{ path('listado_alumnos') }}"><i class="fa fa-list"></i> Listado alumnos</a></li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Managers <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li{% if ruta == 'creacion_manager' %} class="active"{% endif %}><a href="{{ path('creacion_manager') }}"><i class="fa fa-euro"></i> Añadir managers</a></li>
+                                <li{% if ruta == 'subida_manager' %} class="active"{% endif %}><a href="{{ path('subida manager') }}"><i class="fa fa-file"></i> Añadir desde fichero</a></li>
+                                <li{% if ruta == 'listado_manager' %} class="active"{% endif %}><a href="{{ path('listado_managers') }}"><i class="fa fa-list"></i> Listado managers</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if app.user %}

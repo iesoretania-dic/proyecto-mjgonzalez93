@@ -12,12 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class AlumnoController extends Controller
+class ManagerController extends Controller
 {
     /**
-     * @Route("/subida_alumno", name="subida alumno")
+     * @Route("/subida_manager", name="subida manager")
      */
-    public function subirArchivoAction(Request $request) {
+    public function subirArchivoManagerAction(Request $request) {
 
         if($request->getMethod() == "POST"){
             try {
@@ -26,38 +26,24 @@ class AlumnoController extends Controller
                 $ruta = substr($ruta, 0, -4);
                 $destino = $ruta . $carpeta;
                 move_uploaded_file($_FILES['archivo']['tmp_name'], $destino . $_FILES['archivo']['name']);
-                return $this->redirectToRoute('lectura alumno', ['archivo' => $_FILES['archivo']['name']]);
+                return $this->redirectToRoute('lectura manager', ['archivo' => $_FILES['archivo']['name']]);
             }catch (\Exception $e){
                 $this->addFlash('error', 'No se ha podido subir el archivo');
-                return $this->redirectToRoute('subida alumno');
+                return $this->redirectToRoute('subida manager');
             }
         }
-        return $this->render('alumnos/formulario.html.twig');
+        return $this->render('managers/formulario.html.twig');
     }
 
     /**
-     * @Route("/lectura_alumno/{archivo}", name="lectura alumno")
+     * @Route("/lectura_manager/{archivo}", name="lectura manager")
      */
 
-    public function lecturaArchivoAction(Request $request, $archivo) {
+    public function lecturaArchivoManagerAction(Request $request, $archivo) {
 
         $em = $this->getDoctrine()->getManager();
 
         try {
-
-            $conexion = mysqli_connect('localhost', 'root', 'oretania', 'atica_fct');
-            if (!$conexion) {
-                die('No se puede conectar: ' . mysqli_error($conexion));
-            }
-
-            $sentencia = "SELECT * FROM classroom";
-            $resultado = $conexion->query($sentencia);
-            $ID = [];
-
-            while ($tupla = mysqli_fetch_assoc($resultado)) {
-                $ID[] = $tupla;
-
-            }
 
             $carpeta = '/web/archivos/';
             $ruta = $this->get('kernel')->getRootDir();
@@ -67,79 +53,78 @@ class AlumnoController extends Controller
             $csv = Reader::createFromPath($destino . $archivo)
                 ->setHeaderOffset(0);
 
+
+
             foreach ($csv as $dato) {
 
-                $usuarios = $this->getDoctrine()->getRepository('AppBundle:User')->listadoDNIAlumnos();
+                $usuarios = $this->getDoctrine()->getRepository('AppBundle:User')->listadoDNIManagers();
 
                 $repetido = false;
                 if($usuarios) {
                     foreach ($usuarios as $usuario) {
-                        $dni = $dato['DNI/Pasaporte'];
+                        $dni = $dato['DNI'];
                         if ($dni == $usuario['dni']) {
                             global $repetido;
                             $repetido = true;
                         }
                     }
                 }
+
                 if ($repetido == false) {
                     $user = new User();
                     $em->persist($user);
 
-                    $contrasena = $dato['DNI/Pasaporte'];
+                    $nombre = explode( ',', $dato['Apellidos y Nombre']);
 
-                    $user->setLoginUsername($dato['DNI/Pasaporte']);
+                    $contrasena = $dato['DNI'];
+
+                    $user->setLoginUsername($dato['DNI']);
                     $user->setPassword($this->get('security.password_encoder')->encodePassword($user, $contrasena));
-                    $user->setReference($dato['DNI/Pasaporte']);
-                    $user->setFirstName('' . $dato['Primer apellido'] . ' ' . $dato['Segundo apellido']);
-                    $user->setLastName($dato['Nombre']);
-                    $user->setEmail($dato['Correo Electrónico']);
+                    $user->setReference($dato['DNI']);
+
+                    $user->setFirstName($nombre[0]);
+                    $user->setLastName(trim($nombre[1]));
                     $user->setGender('0');
                     $user->setGlobalAdministrator('0');
-                    $user->setFinancialManager('0');
+                    $user->setFinancialManager('1');
                     $user->setAllowExternalLogin('0');
                     $user->setExternalLogin('0');
                     $user->setEnabled('0');
 
-                    foreach ($ID as $clase) {
-                        if ($clase['name'] == $dato['Unidad']) {
-                            $grupo = $this->getDoctrine()->getRepository('AppBundle:Group')->obtencionGrupo($clase['id']);
-                            $user->setStudentGroup($grupo);
-                        }
-                    }
                     $em->flush();
                 }
             }
             $this->addFlash('exito', 'Solicitud realizada correctamente ');
-            return $this->redirectToRoute('listado_alumnos');
+            return $this->redirectToRoute('listado_managers');
         }catch (\Exception $e){
-            $this->addFlash('error', 'No se han podido guardar los cambios ');
+            $this->addFlash('error', 'No se han podido guardar los cambios ' .$e);
             return $this->redirectToRoute('inicio');
         }
     }
 
     /**
-     * @Route("/alumnos", name="listado_alumnos")
+     * @Route("/managers", name="listado_managers")
      */
-    public function listadoAlumnosAction()
+    public function listadoManagersAction()
     {
 
-        $alumnos = $this->getDoctrine()->getRepository('AppBundle:User')->listadoAlumnos();
+        $managers = $this->getDoctrine()->getRepository('AppBundle:User')->listadoManagers();
 
-        return $this->render('alumnos/listado.html.twig', [
-            'alumnos' => $alumnos
+        return $this->render('managers/listado.html.twig', [
+            'managers' => $managers
         ]);
     }
 
     /**
-     * @Route("/nuevo/alumno/", name="creacion_alumnos")
-     * @Route("/editar/alumno/{id}", name="edicion_alumnos")
+     * @Route("/nuevo/manager/", name="creacion_manager")
+     * @Route("/editar/manager/{id}", name="edicion_managers")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function formularioAlumnosAction(Request $request, User $usuario = null){
+    public function formularioManagersAction(Request $request, User $usuario = null){
         $em = $this->getDoctrine()->getManager();
         $nuevo = false;
         $modificar_perfil = true;
-        $alumno = true;
+        $manager = true;
 
         if (null === $usuario) {
             $usuario = new User();
@@ -148,7 +133,7 @@ class AlumnoController extends Controller
             $em->persist($usuario);
         }
 
-        $form = $this->createForm(UserType::class, $usuario,['alumno' => $alumno, 'modificar_perfil' => $modificar_perfil ,'nuevo' => $nuevo]);
+        $form = $this->createForm(UserType::class, $usuario,['manager' => $manager, 'modificar_perfil' => $modificar_perfil ,'nuevo' => $nuevo]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -159,7 +144,7 @@ class AlumnoController extends Controller
                     $usuario->setLoginUsername($dni);
                     $usuario->setGlobalAdministrator(false);
                     $usuario->setAllowExternalLogin(false);
-                    $usuario->setFinancialManager(false);
+                    $usuario->setFinancialManager(true);
                     $usuario->setEnabled(false);
                     $clave = $this->get('security.password_encoder')->encodePassword($usuario, $dni);
                     $usuario->setPassword($clave);
@@ -167,7 +152,7 @@ class AlumnoController extends Controller
                 }
                 $em->flush();
                 $this->addFlash('exito', 'Cambios guardados correctamente ' );
-                return $this->redirectToRoute('listado_alumnos');
+                return $this->redirectToRoute('listado_managers');
             }
             catch (\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios ');
@@ -175,7 +160,7 @@ class AlumnoController extends Controller
 
         }
 
-        return $this->render('alumnos/usuario.html.twig', [
+        return $this->render('managers/usuario.html.twig', [
             'usuario' => $usuario,
             'formulario' => $form->createView()
         ]);

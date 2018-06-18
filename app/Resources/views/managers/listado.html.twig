@@ -1,0 +1,44 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Listado managers{% endblock %}
+{% block content %}
+    {% if managers %}
+        <h1>Listado de managers</h1>
+        <a href="{{ path('creacion_manager') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir Manager</a>
+        <br/><br/>
+        <table class="table table-responsive table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="col-sm-2">Apellidos, Nombre</th>
+                <th class="col-sm-1">DNI</th>
+                <th class="col-sm-1">Ciudad</th>
+                <th class="col-sm-1">Provincia</th>
+                <th class="col-sm-1">CP</th>
+                <th class="col-sm-2">Direccion</th>
+                <th class="col-sm-1">Email</th>
+                <th class="col-sm-1">Accion</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for manager in managers %}
+                <tr>
+                    <td>{{ manager.firstName }}, {{ manager.lastName }}</td>
+                    <td>{{ manager.reference }}</td>
+                    <td>{{ manager.city }}</td>
+                    <td>{{ manager.province }}</td>
+                    <td>{{ manager.zipCode }}</td>
+                    <td>{{ manager.address }}</td>
+                    <td>{{ manager.email }}</td>
+                    <td>
+                        <a href="{{ path('edicion_managers', {'id': manager.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
+                        <a href="{{ path('password_usuario', {'id': manager.id}) }}" class="btn btn-xs btn-info " title="Modificar Pass"><i class="fa fa-key"></i></a>
+                        <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay managers que mostrar</h2>
+    {% endif %}
+{% endblock %}

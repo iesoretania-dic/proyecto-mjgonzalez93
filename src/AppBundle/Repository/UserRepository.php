@@ -33,4 +33,20 @@ class UserRepository extends EntityRepository
             ->getSingleResult();
     }
 
+    public function listadoDNIManagers()
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT u.reference AS dni FROM AppBundle:User u WHERE u.financialManager != false  ')
+            ->getResult();
+    }
+
+    public function listadoManagers()
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.financialManager = :manager')
+            ->setParameter('manager', true)
+            ->getQuery()
+            ->getResult();
+    }
+
 }
