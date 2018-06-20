@@ -1,0 +1,45 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Listado empresas{% endblock %}
+{% block content %}
+    {% if empresas %}
+        <h1>Listado de empresas</h1>
+        <a href="{{ path('creacion_empresas') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir empresa</a>
+        <br/><br/>
+        <table class="table table-responsive table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="col-sm-2">Nombre</th>
+                <th class="col-sm-1">CIF</th>
+                <th class="col-sm-1">Ciudad</th>
+                <th class="col-sm-1">Provincia</th>
+                <th class="col-sm-1">CP</th>
+                <th class="col-sm-2">Direccion</th>
+                <th class="col-sm-1">Email</th>
+                <th class="col-sm-1">Manager</th>
+                <th class="col-sm-1">Accion</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for empresa in empresas %}
+                <tr>
+                    <td>{{ empresa.name }}</td>
+                    <td>{{ empresa.code }}</td>
+                    <td>{{ empresa.city }}</td>
+                    <td>{{ empresa.province }}</td>
+                    <td>{{ empresa.zipCode }}</td>
+                    <td>{{ empresa.address }}</td>
+                    <td>{{ empresa.email }}</td>
+                    <td>{{ empresa.manager }}</td>
+                    <td>
+                        <a href="{{ path('edicion_empresa', {'id': empresa.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
+                        <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay empresas que mostrar</h2>
+    {% endif %}
+{% endblock %}

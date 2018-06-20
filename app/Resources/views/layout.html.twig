@@ -40,6 +40,14 @@
                                 <li{% if ruta == 'listado_tutores' %} class="active"{% endif %}><a href="{{ path('listado_tutores') }}"><i class="fa fa-list"></i> Listado tutores</a></li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Empresas <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li{% if ruta == 'creacion_empresas' %} class="active"{% endif %}><a href="{{ path('creacion_empresas') }}"><i class="fa fa-building"></i> Añadir empresa</a></li>
+                                <li{% if ruta == 'subida_empresas' %} class="active"{% endif %}><a href="{{ path('subida empresa') }}"><i class="fa fa-file"></i> Añadir desde fichero</a></li>
+                                <li{% if ruta == 'listado_empresas' %} class="active"{% endif %}><a href="{{ path('listado_empresas') }}"><i class="fa fa-list"></i> Listado empresas</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if app.user %}

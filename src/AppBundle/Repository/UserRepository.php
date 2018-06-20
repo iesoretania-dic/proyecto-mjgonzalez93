@@ -58,4 +58,13 @@ class UserRepository extends EntityRepository
             ->getSingleResult();
     }
 
+    public function obtenerAdmin()
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.globalAdministrator = :admin')
+            ->setParameter('admin', true)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
 }
