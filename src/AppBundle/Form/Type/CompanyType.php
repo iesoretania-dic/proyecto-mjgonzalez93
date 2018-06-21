@@ -39,7 +39,8 @@ class CompanyType extends AbstractType
                         return $er->createQueryBuilder('u')
                             ->where('u.financialManager = true');
                     },
-                    'label' => 'Manager'
+                    'label' => 'Manager',
+                    'attr' => array('class' => 'select2'),
                 ])
                 ->add('city', null, [
                     'label' => 'Ciudad',

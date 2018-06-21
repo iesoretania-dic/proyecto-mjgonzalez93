@@ -34,14 +34,16 @@ class AgreementType extends AbstractType
                         return $er->createQueryBuilder('a')
                             ->where('a.studentGroup != false');
                     },
-                    'label' => 'Alumno'
-                ])
+                    'label' => 'Alumno',
+                    'attr' => array('class' => 'select2'),
+                    ])
                 ->add('workcenter', EntityType::class, [
                     'class' => Workcenter::class,
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('w');
                     },
-                    'label' => 'Centro de trabajo'
+                    'label' => 'Centro de trabajo',
+                    'attr' => array('class' => 'select2'),
                 ])
                 ->add('workTutor', EntityType::class, [
                     'class' => User::class,
@@ -49,7 +51,8 @@ class AgreementType extends AbstractType
                         return $er->createQueryBuilder('u')
                             ->where('u.financialManager = true');
                     },
-                    'label' => 'Tutor laboral'
+                    'label' => 'Tutor laboral',
+                    'attr' => array('class' => 'select2'),
                 ])
                 ->add('educationalTutor', EntityType::class, [
                     'class' => User::class,
@@ -58,7 +61,8 @@ class AgreementType extends AbstractType
                             ->addSelect('t')
                             ->join('u.tutorizedGroups', 't');
                     },
-                    'label' => 'Tutor docente'
+                    'label' => 'Tutor docente',
+                    'attr' => array('class' => 'select2'),
                 ])
                 ->add('signDate', DateType::class , [
                     'widget' => 'single_text',

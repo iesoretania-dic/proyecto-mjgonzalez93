@@ -93,7 +93,8 @@ class UserType extends AbstractType
                     'label' => 'Es un estudiante del grupo',
                     'placeholder' => 'Es un estudiante del grupo',
                     'required' => false,
-                    'disabled' => !$options['admin']
+                    'disabled' => !$options['admin'],
+                    'attr' => array('class' => 'select2'),
                 ]);
             }
         }
