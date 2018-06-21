@@ -181,4 +181,31 @@ class AlumnoController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/eliminar/alumno/{id}", name="eliminar_alumno")
+     */
+    public function eliminarAlumnoAction(Request $request, User $alumno){
+
+        $em = $this->getDoctrine()->getManager();
+        if ($request->isMethod('POST')) {
+            try {
+                foreach($alumno->getStudentAgreements() as $acuerdo) {
+                    $em->remove($acuerdo);
+                };
+
+                $em->remove($alumno);
+                $em->flush();
+                $this->addFlash('exito', 'Alumno eliminado con exito');
+                return $this->redirectToRoute('listado_alumnos');
+            }
+            catch (\Exception $e) {
+                $this->addFlash('error', 'No se ha podido eliminar el alumno');
+            }
+        }
+        return $this->render('alumnos/eliminar.html.twig', [
+            'alumno' => $alumno
+        ]);
+    }
+
+
 }

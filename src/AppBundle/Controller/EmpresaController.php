@@ -183,4 +183,36 @@ class EmpresaController extends Controller
             'formulario' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/eliminar/empresa/{id}", name="eliminar_empresa")
+     */
+    public function eliminarEmpresaAction(Request $request, Company $empresa){
+
+        $em = $this->getDoctrine()->getManager();
+        if ($request->isMethod('POST')) {
+            try {
+                $workcenter = $this->getDoctrine()->getRepository('AppBundle:Workcenter')->obtenerCentros($empresa);
+
+                $acuerdos = $this->getDoctrine()->getRepository('AppBundle:Agreement')->listadoAcuerdosEmpresa($workcenter);
+
+                foreach($acuerdos as $acuerdo) {
+                    $em->remove($acuerdo);
+                };
+
+                $em->remove($workcenter);
+                $em->remove($empresa);
+                $em->flush();
+                $this->addFlash('exito', 'Empresa eliminado con exito');
+                return $this->redirectToRoute('listado_empresas');
+            }
+            catch (\Exception $e) {
+                $this->addFlash('error', 'No se ha podido eliminar la empresa');
+            }
+        }
+        return $this->render('empresas/eliminar.html.twig', [
+            'empresa' => $empresa
+        ]);
+    }
+
 }

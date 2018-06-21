@@ -33,7 +33,7 @@
                     <td>
                         <a href="{{ path('edicion_alumnos', {'id': alumno.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
                         <a href="{{ path('password_usuario', {'id': alumno.id}) }}" class="btn btn-xs btn-info " title="Modificar Pass"><i class="fa fa-key"></i></a>
-                        <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
+                        <a href="{{ path('eliminar_alumno', {'id': alumno.id}) }}" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
                     </td>
 
                 </tr>

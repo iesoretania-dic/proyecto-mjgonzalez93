@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Eliminar: {{ empresa.name }}
+{% endblock %}
+
+{% block content %}
+    {% for mensaje in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ mensaje }}
+        </div>
+    {% endfor %}
+    <h1>{{ empresa.name }} - {{ empresa.code }}</h1>
+
+    <div class="alert alert-warning">
+        ¿Está seguro de que desea eliminar la empresa? La operación no se puede deshacer.
+    </div>
+    <form method="post">
+        <a href="{{ path('listado_empresas') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Volver al listado de empresas</a>
+        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar empresa</button>
+    </form>
+
+{% endblock %}

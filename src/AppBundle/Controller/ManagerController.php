@@ -166,4 +166,35 @@ class ManagerController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/eliminar/manager/{id}", name="eliminar_manager")
+     */
+    public function eliminarManagerAction(Request $request, User $manager){
+
+        $em = $this->getDoctrine()->getManager();
+
+        if ($request->isMethod('POST')) {
+            try {
+
+                $acuerdos = $this->getDoctrine()->getRepository('AppBundle:Agreement')->listadoAcuerdosManager($manager);
+
+                foreach($acuerdos as $acuerdo) {
+                    $em->remove($acuerdo);
+                };
+
+                $em->remove($manager);
+                $em->flush();
+                $this->addFlash('exito', 'Manager eliminado con exito');
+                return $this->redirectToRoute('listado_managers');
+            }
+            catch (\Exception $e) {
+                $this->addFlash('error', 'No se ha podido eliminar el manager ' .$e);
+            }
+        }
+        return $this->render('managers/eliminar.html.twig', [
+            'manager' => $manager
+        ]);
+    }
+
+
 }

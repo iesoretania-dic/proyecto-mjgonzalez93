@@ -94,4 +94,33 @@ class TutorController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/eliminar/tutor/{id}", name="eliminar_tutor")
+     */
+    public function eliminarTutorAction(Request $request, User $tutor){
+
+        $em = $this->getDoctrine()->getManager();
+        if ($request->isMethod('POST')) {
+            try {
+
+                $acuerdos = $this->getDoctrine()->getRepository('AppBundle:Agreement')->listadoAcuerdosTutor($tutor);
+
+                foreach($acuerdos as $acuerdo) {
+                    $em->remove($acuerdo);
+                };
+
+                $em->remove($tutor);
+                $em->flush();
+                $this->addFlash('exito', 'Tutor eliminado con exito');
+                return $this->redirectToRoute('listado_tutores');
+            }
+            catch (\Exception $e) {
+                $this->addFlash('error', 'No se ha podido eliminar el tutor');
+            }
+        }
+        return $this->render('tutores/eliminar.html.twig', [
+            'tutor' => $tutor
+        ]);
+    }
+
 }

@@ -32,7 +32,7 @@
                     <td>{{ empresa.manager }}</td>
                     <td>
                         <a href="{{ path('edicion_empresa', {'id': empresa.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
-                        <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
+                        <a href="{{ path('eliminar_empresa', {'id': empresa.id}) }}" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
                     </td>
 
                 </tr>

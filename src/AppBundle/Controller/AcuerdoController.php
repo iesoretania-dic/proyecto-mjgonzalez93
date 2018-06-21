@@ -163,4 +163,28 @@ class AcuerdoController extends Controller
             'formulario' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/eliminar/acuerdo/{id}", name="eliminar_acuerdo")
+     */
+    public function eliminarAcuerdoAction(Request $request, Agreement $acuerdo){
+
+        $em = $this->getDoctrine()->getManager();
+        if ($request->isMethod('POST')) {
+            try {
+
+                $em->remove($acuerdo);
+                $em->flush();
+                $this->addFlash('exito', 'Acuerdo eliminado con exito');
+                return $this->redirectToRoute('listado_acuerdos');
+            }
+            catch (\Exception $e) {
+                $this->addFlash('error', 'No se ha podido eliminar el acuerdo');
+            }
+        }
+        return $this->render('acuerdos/eliminar.html.twig', [
+            'acuerdo' => $acuerdo
+        ]);
+    }
+
 }

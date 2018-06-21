@@ -31,7 +31,7 @@
                     <td>
                         <a href="{{ path('edicion_managers', {'id': manager.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
                         <a href="{{ path('password_usuario', {'id': manager.id}) }}" class="btn btn-xs btn-info " title="Modificar Pass"><i class="fa fa-key"></i></a>
-                        <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
+                        <a href="{{ path('eliminar_manager', {'id': manager.id}) }}" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
                     </td>
 
                 </tr>
