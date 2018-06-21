@@ -7,7 +7,9 @@
         Editar tutor
     {% endif %}
 {% endblock %}
-
+{% block validacion %}
+    <script src="{{ asset('js/validacion.js') }}"></script>
+{% endblock %}
 {% block content %}
     {{ form_start(formulario) }}
     {{ form_widget(formulario) }}

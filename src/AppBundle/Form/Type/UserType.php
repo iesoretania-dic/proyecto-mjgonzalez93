@@ -31,7 +31,8 @@ class UserType extends AbstractType
                 ])
                 ->add('reference', null, [
                     'label' => 'DNI',
-                    'required' => false
+                    'required' => true,
+                    'attr' => array('class' => 'DNI')
                 ])
                 ->add('lastName', null, [
                     'label' => 'Nombre',
