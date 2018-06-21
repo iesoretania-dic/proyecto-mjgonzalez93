@@ -21,6 +21,7 @@ class AcuerdoController extends Controller
 {
     /**
      * @Route("/subida_acuerdo", name="subida acuerdo")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function subirArchivoAcuerdoAction(Request $request) {
 
@@ -42,6 +43,7 @@ class AcuerdoController extends Controller
 
     /**
      * @Route("/lectura_acuerdo/{archivo}", name="lectura acuerdo")
+     * @IsGranted("ROLE_ADMIN")
      */
 
     public function lecturaArchivoAcuerdoAction(Request $request, $archivo) {
@@ -118,6 +120,7 @@ class AcuerdoController extends Controller
 
     /**
      * @Route("/acuerdos", name="listado_acuerdos")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function listadoEmpresasAction()
     {
@@ -166,6 +169,7 @@ class AcuerdoController extends Controller
 
     /**
      * @Route("/eliminar/acuerdo/{id}", name="eliminar_acuerdo")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function eliminarAcuerdoAction(Request $request, Agreement $acuerdo){
 

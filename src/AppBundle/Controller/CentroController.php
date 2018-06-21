@@ -21,6 +21,7 @@ class CentroController extends Controller
 
     /**
      * @Route("/centros", name="listado_centros")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function listadoCentrosAction()
     {

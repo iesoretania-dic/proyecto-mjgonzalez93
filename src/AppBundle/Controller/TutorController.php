@@ -17,6 +17,7 @@ class TutorController extends Controller
 
     /**
      * @Route("/tutores", name="listado_tutores")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function listadoTutoresAction()
     {
@@ -96,6 +97,7 @@ class TutorController extends Controller
 
     /**
      * @Route("/eliminar/tutor/{id}", name="eliminar_tutor")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function eliminarTutorAction(Request $request, User $tutor){
 

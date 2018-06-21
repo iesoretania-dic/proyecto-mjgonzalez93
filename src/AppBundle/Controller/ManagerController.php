@@ -16,6 +16,7 @@ class ManagerController extends Controller
 {
     /**
      * @Route("/subida_manager", name="subida manager")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function subirArchivoManagerAction(Request $request) {
 
@@ -37,6 +38,7 @@ class ManagerController extends Controller
 
     /**
      * @Route("/lectura_manager/{archivo}", name="lectura manager")
+     * @IsGranted("ROLE_ADMIN")
      */
 
     public function lecturaArchivoManagerAction(Request $request, $archivo) {
@@ -104,6 +106,7 @@ class ManagerController extends Controller
 
     /**
      * @Route("/managers", name="listado_managers")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function listadoManagersAction()
     {
@@ -168,6 +171,7 @@ class ManagerController extends Controller
 
     /**
      * @Route("/eliminar/manager/{id}", name="eliminar_manager")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function eliminarManagerAction(Request $request, User $manager){
 

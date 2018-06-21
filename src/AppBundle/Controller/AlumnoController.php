@@ -16,6 +16,7 @@ class AlumnoController extends Controller
 {
     /**
      * @Route("/subida_alumno", name="subida alumno")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function subirArchivoAction(Request $request) {
 
@@ -37,6 +38,7 @@ class AlumnoController extends Controller
 
     /**
      * @Route("/lectura_alumno/{archivo}", name="lectura alumno")
+     * @IsGranted("ROLE_ADMIN")
      */
 
     public function lecturaArchivoAction(Request $request, $archivo) {
@@ -119,6 +121,7 @@ class AlumnoController extends Controller
 
     /**
      * @Route("/alumnos", name="listado_alumnos")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function listadoAlumnosAction()
     {
@@ -183,6 +186,7 @@ class AlumnoController extends Controller
 
     /**
      * @Route("/eliminar/alumno/{id}", name="eliminar_alumno")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function eliminarAlumnoAction(Request $request, User $alumno){
 

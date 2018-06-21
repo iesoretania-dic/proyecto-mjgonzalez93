@@ -19,6 +19,7 @@ class EmpresaController extends Controller
 {
     /**
      * @Route("/subida_empresa", name="subida empresa")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function subirArchivoEmpresaAction(Request $request) {
 
@@ -40,6 +41,7 @@ class EmpresaController extends Controller
 
     /**
      * @Route("/lectura_empresa/{archivo}", name="lectura empresa")
+     * @IsGranted("ROLE_ADMIN")
      */
 
     public function lecturaArchivoEmpresaAction(Request $request, $archivo) {
@@ -114,6 +116,7 @@ class EmpresaController extends Controller
 
     /**
      * @Route("/empresas", name="listado_empresas")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function listadoEmpresasAction()
     {
@@ -186,6 +189,7 @@ class EmpresaController extends Controller
 
     /**
      * @Route("/eliminar/empresa/{id}", name="eliminar_empresa")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function eliminarEmpresaAction(Request $request, Company $empresa){
 

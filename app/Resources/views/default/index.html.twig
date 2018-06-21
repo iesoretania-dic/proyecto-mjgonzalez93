@@ -3,5 +3,15 @@
 {% block content %}
 
     <h1>Bienvenido a la aplicación de importación de datos para Atica-fct</h1>
-
+    <div class="instrucciones">
+        <h2>Primeros pasos</h2>
+        <p>Disponemos de un fichero sql con los datos iniciales de nuestra aplicación. En él, se incluyen el usuario admin, y los
+        datos iniciales de "Jefe de departamento", "Departamentos (Departments)" y "Cursos (Classorooms)", los cuales en el caso
+        de utilizar la aplicación "atica-fct" por primera vez, tendremos que crear en ese orden para su correcto funcionamiento.
+        </p>
+        <h2>Orden de creación de datos</h2>
+        <p>Ya sea por importación o creandolos a mano, debemos crear primero las entidades de alumnos, empresas, managers y tutores.
+        Una vez tengamos esas cuatro entidades podremos proceder a crear un nuevo acuerdo.
+        </p>
+    </div>
 {% endblock %}
