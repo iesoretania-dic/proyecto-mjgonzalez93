@@ -48,6 +48,14 @@
                                 <li{% if ruta == 'listado_empresas' %} class="active"{% endif %}><a href="{{ path('listado_empresas') }}"><i class="fa fa-list"></i> Listado empresas</a></li>
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Acuerdos <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li{% if ruta == 'creacion_acuerdo' %} class="active"{% endif %}><a href="{{ path('creacion_acuerdo') }}"><i class="fa fa-handshake-o"></i> Añadir acuerdo</a></li>
+                                <li{% if ruta == 'subida_acuerdo' %} class="active"{% endif %}><a href="{{ path('subida acuerdo') }}"><i class="fa fa-file"></i> Añadir desde fichero</a></li>
+                                <li{% if ruta == 'listado_acuerdos' %} class="active"{% endif %}><a href="{{ path('listado_acuerdos') }}"><i class="fa fa-list"></i> Listado acuerdos</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if app.user %}

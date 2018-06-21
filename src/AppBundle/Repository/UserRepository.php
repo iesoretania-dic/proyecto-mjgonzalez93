@@ -67,4 +67,25 @@ class UserRepository extends EntityRepository
             ->getSingleResult();
     }
 
+    public function obtenerUsuario($apellidos, $nombre)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.firstName = :apellidos')
+            ->andWhere('u.lastName = :nombre')
+            ->setParameter('apellidos', $apellidos)
+            ->setParameter('nombre', $nombre)
+            ->getQuery()
+            ->getResult();
+    }
+    public function obtenerUsuarioDNI($dni)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.reference = :dni')
+            ->setParameter('dni', $dni)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+
+
 }

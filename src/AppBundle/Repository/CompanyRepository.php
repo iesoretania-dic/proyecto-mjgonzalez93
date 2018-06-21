@@ -17,6 +17,14 @@ class CompanyRepository extends EntityRepository
             ->getResult();
     }
 
+    public function obtenerEmpresa($cif)
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.code = :cif')
+            ->setParameter('cif', $cif)
+            ->getQuery()
+            ->getSingleResult();
+    }
 
 
 }

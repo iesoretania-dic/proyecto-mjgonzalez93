@@ -1,0 +1,45 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Listado acuerdos{% endblock %}
+{% block content %}
+    {% if acuerdos %}
+        <h1>Listado de acuerdos</h1>
+        <a href="{{ path('creacion_acuerdo') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir acuerdo</a>
+        <br/><br/>
+        <table class="table table-responsive table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="col-sm-2">Alumno</th>
+                <th class="col-sm-1">Empresa</th>
+                <th class="col-sm-2">Tutor laboral</th>
+                <th class="col-sm-2">Tutor docente</th>
+                <th class="col-sm-1">Fecha de firma</th>
+                <th class="col-sm-1">Fecha de inicio</th>
+                <th class="col-sm-1">Fecha de fin</th>
+                <th class="col-sm-1">Trimestre</th>
+                <th class="col-sm-1">Accion</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for acuerdo in acuerdos %}
+                <tr>
+                    <td>{{ acuerdo.student }}</td>
+                    <td>{{ acuerdo.workcenter }}</td>
+                    <td>{{ acuerdo.workTutor }}</td>
+                    <td>{{ acuerdo.educationalTutor }}</td>
+                    <td>{{ acuerdo.signDate|date('d/m/Y') }}</td>
+                    <td>{{ acuerdo.fromDate|date('d/m/Y') }}</td>
+                    <td>{{ acuerdo.toDate|date('d/m/Y') }}</td>
+                    <td>{{ acuerdo.quarter }}</td>
+                    <td>
+                        <a href="{{ path('edicion_acuerdo', {'id': acuerdo.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
+                        <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay acuerdos que mostrar</h2>
+    {% endif %}
+{% endblock %}

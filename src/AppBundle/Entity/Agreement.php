@@ -26,7 +26,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AgreementRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AgreementRepository")
+ *
  */
 class Agreement
 {
@@ -98,7 +99,6 @@ class Agreement
     /**
      * @ORM\ManyToMany(targetEntity="Activity")
      * @ORM\OrderBy({"code"="ASC", "name"="ASC"})
-     * @Assert\Count(min="1", minMessage="agreement.no_activities")
      * @var Collection
      */
     protected $activities;
