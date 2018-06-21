@@ -16,4 +16,12 @@ class WorkcenterRepository extends EntityRepository
             ->getQuery()
             ->getSingleResult();
     }
+
+    public function listadoCentros()
+    {
+        return $this->createQueryBuilder('w')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

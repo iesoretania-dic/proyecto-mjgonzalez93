@@ -1,0 +1,45 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Listado centros{% endblock %}
+{% block content %}
+    {% if centros %}
+        <h1>Listado de centros</h1>
+        <a href="{{ path('creacion_centros') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir centros</a>
+        <br/><br/>
+        <table class="table table-responsive table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="col-sm-2">Nombre</th>
+                <th class="col-sm-1">Empresa</th>
+                <th class="col-sm-1">Ciudad</th>
+                <th class="col-sm-1">Provincia</th>
+                <th class="col-sm-1">CP</th>
+                <th class="col-sm-2">Direccion</th>
+                <th class="col-sm-1">Email</th>
+                <th class="col-sm-1">Accion</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for centro in centros %}
+                <tr>
+                    <td>{{ centro.name }}</td>
+                    <td>{{ centro.company }}</td>
+                    <td>{{ centro.city }}</td>
+                    <td>{{ centro.province }}</td>
+                    <td>{{ centro.zipCode }}</td>
+                    <td>{{ centro.address }}</td>
+                    <td>{{ centro.email }}</td>
+                    <td>
+                        <a href="{{ path('edicion_centros', {'id': centro.id}) }}" class="btn btn-xs btn-warning " title="Modificar"><i class="fa fa-pencil"></i></a>
+                        <a href="#" class="btn btn-xs btn-danger " title="Eliminar"><i class="fa fa-trash"></i></a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay centros que mostrar</h2>
+        <br/>
+        <a href="{{ path('creacion_centros') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir centros</a>
+    {% endif %}
+{% endblock %}
