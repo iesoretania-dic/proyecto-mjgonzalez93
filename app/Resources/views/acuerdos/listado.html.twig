@@ -41,5 +41,7 @@
         </table>
     {% else %}
         <h2>No hay acuerdos que mostrar</h2>
+        <br/>
+        <a href="{{ path('creacion_acuerdo') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir acuerdo</a>
     {% endif %}
 {% endblock %}

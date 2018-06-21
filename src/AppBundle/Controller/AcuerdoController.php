@@ -80,30 +80,39 @@ class AcuerdoController extends Controller
                 $empresa = $this->getDoctrine()->getRepository('AppBundle:Company')->obtenerEmpresa($cif);
                 $centro = $this->getDoctrine()->getRepository('AppBundle:Workcenter')->obtenerCentros($empresa);
 
-                if(count($alumno)==1) {
+                $repetido = false;
 
+                foreach ($acuerdos as $acuerdo){
+                    $usuario = $acuerdo->getstudent();
+                    $dni = $usuario->getreference();
+                    $dniAlta = $alumno[0]->getreference();
+                    if($dni == $dniAlta){
+                        global $repetido;
+                        $repetido = true;
+                    }
+                }
+
+                if ($repetido == false) {
                     $acuerdo = new Agreement();
 
                     $em->persist($acuerdo);
 
                     $acuerdo->setStudent($alumno[0]);
-                    $acuerdo->setEducationalTutor($tutorLaboral);
-                    $acuerdo->setWorkTutor($tutorDocente);
+                    $acuerdo->setEducationalTutor($tutorDocente);
+                    $acuerdo->setWorkTutor($tutorLaboral);
                     $acuerdo->setWorkcenter($centro);
                     $acuerdo->setFromDate(new \DateTime($dato['Fecha de inicio de las prácticas']));
                     $acuerdo->setToDate(new \DateTime($dato['Fecha de finalización de las prácticas']));
 
                     $em->flush();
                 }
-
             }
 
-
             $this->addFlash('exito', 'Solicitud realizada correctamente ');
-            return $this->redirectToRoute('inicio');
+            return $this->redirectToRoute('listado_acuerdos');
         }catch (\Exception $e){
             $this->addFlash('error', 'No se han podido guardar los cambios ' .$e);
-            return $this->redirectToRoute('inicio');
+            return $this->redirectToRoute('listado_acuerdos');
         }
     }
 

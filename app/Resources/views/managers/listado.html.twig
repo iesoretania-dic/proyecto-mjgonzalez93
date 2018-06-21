@@ -40,5 +40,7 @@
         </table>
     {% else %}
         <h2>No hay managers que mostrar</h2>
+        <br/>
+        <a href="{{ path('creacion_manager') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir Manager</a>
     {% endif %}
 {% endblock %}

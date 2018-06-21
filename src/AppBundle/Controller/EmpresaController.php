@@ -105,10 +105,10 @@ class EmpresaController extends Controller
             }
 
             $this->addFlash('exito', 'Solicitud realizada correctamente ');
-            return $this->redirectToRoute('inicio');
+            return $this->redirectToRoute('listado_empresas');
         }catch (\Exception $e){
-            $this->addFlash('error', 'No se han podido guardar los cambios ' .$e);
-            return $this->redirectToRoute('inicio');
+            $this->addFlash('error', 'No se han podido guardar los cambios ');
+            return $this->redirectToRoute('listado_empresas');
         }
     }
 

@@ -40,5 +40,7 @@
         </table>
     {% else %}
         <h2>No hay tutores que mostrar</h2>
+        <br/>
+        <a href="{{ path('creacion_tutores') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir tutor</a>
     {% endif %}
 {% endblock %}

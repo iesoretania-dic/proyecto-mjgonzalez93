@@ -41,5 +41,7 @@
         </table>
     {% else %}
         <h2>No hay empresas que mostrar</h2>
+        <br/>
+        <a href="{{ path('creacion_empresas') }}" class="btn btn-success " title="Añadir"><i class="fa fa-plus"></i> Añadir empresa</a>
     {% endif %}
 {% endblock %}
